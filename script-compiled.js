@@ -3,7 +3,7 @@ class Stopwatch {
         this.running = false;
         this.display = display;
         this.reset();
-        this.print(this.times);
+        this.print();
     }
 
     reset() {
@@ -12,6 +12,7 @@ class Stopwatch {
             seconds: 0,
             miliseconds: 0
         };
+        this.print();
     }
 
     print() {
@@ -59,6 +60,19 @@ class Stopwatch {
         this.running = false;
         clearInterval(this.watch);
     }
+
+    addToList() {
+        if (!this.running) {
+            var currentResult = this.format(this.times);
+            var resultTime = document.createElement("li");
+            resultTime.innerHTML = currentResult;
+            timesList.appendChild(resultTime);
+        }
+    }
+
+    resetList() {
+        timesList.innerHTML = "";
+    }
 }
 
 const stopwatch = new Stopwatch(document.querySelector(".stopwatch"));
@@ -67,3 +81,10 @@ var startButton = document.getElementById("start");
 startButton.addEventListener("click", () => stopwatch.start());
 var stopButton = document.getElementById("stop");
 stopButton.addEventListener("click", () => stopwatch.stop());
+var resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", () => stopwatch.reset());
+var timesList = document.getElementById("results");
+var addToListButton = document.getElementById("add-to-list");
+addToListButton.addEventListener("click", () => stopwatch.addToList());
+var resetListButton = document.getElementById("reset-list");
+resetListButton.addEventListener("click", () => stopwatch.resetList());
